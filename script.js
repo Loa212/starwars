@@ -8,15 +8,40 @@ const fetchPlanets = async () => {
     return planets
 }
 
+const formatDate = (inputDate) => {
 
+    //"2014-12-10T11:39:13.934000Z", 
+    //yyyy-mm-dd
 
-window.onload= () => {
-    console.log('document ready - go!')
+    let array = inputDate.split("T")
+    let date = array[0]
+    let dateArray = date.split("-")
+    let year = dateArray[0]
+    let month = dateArray[1]
+    let day = dateArray[2]
 
-   fetchPlanets().then(planets => {
-       console.log(planets.results[1].name)
-   })
+    
+    let time = array[1]
+    time = time.substring(0,5)
+    
+    date = `${day}-${month}-${year} ${time}` 
 
+    return date
 }
 
+$(document).ready(function () {
+    console.log('ready')
+    fetchPlanets().then(data => {
 
+        let planets = data.results 
+
+        console.log(planets.length)
+
+        for (let i = 0; i < planets.length; i++) {
+            $(`#${i+1}`).find("h3").html(planets[i].name)
+            $(`#${i+1}`).find("p").html( formatDate(planets[i].created) )
+            
+        }
+    })
+
+})

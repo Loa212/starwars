@@ -114,3 +114,35 @@ input:hover{
 .mt-16px{
     margin-top: 16px;
 }
+
+.vertical-line{
+    width: 2px;
+    background: #000;
+    height: 100%;
+    position: absolute;
+    align-self: center;
+    left: 50%;
+    top: 200px;
+}
+
+.planets-div {
+    padding-top: 56px;
+    margin: auto;
+}
+
+.planet-card{
+    background: #000;
+    height: 80px;
+    max-width: 40%;
+    border-radius: 6px;
+    /**/
+    padding: 12px;
+
+    /**/
+    color: #fbfbfb;
+    text-align: end;
+}
+
+.planet-card > p {
+    color: red;
+}
