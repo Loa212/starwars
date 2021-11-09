@@ -15,6 +15,10 @@ body{
     padding-top: 24px;
 }
 
+.title{
+    color: #1a1a1a;
+}
+
 .flex > *:not(:first-child) {
     margin-left: 16px; 
 } 
@@ -125,24 +129,46 @@ input:hover{
     top: 200px;
 }
 
+
 .planets-div {
     padding-top: 56px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 
+
 .planet-card{
-    background: #000;
+    background: #1a1a1a;
     height: 80px;
     max-width: 40%;
     border-radius: 6px;
     /**/
     padding: 12px;
-
     /**/
-    color: #fbfbfb;
     text-align: end;
 }
 
+.planets-div :nth-child(odd) {
+    align-self: flex-end;
+    width: 60%;
+    text-align: start;
+    
+}  
+
+
+.planets-div :nth-child(even) >h3 {
+    width: 100%;
+    text-align: end;
+}  
+
+.planet-card > h3 {
+    color: #fbfbfb;
+    font-size: x-large;
+}
+
 .planet-card > p {
-    color: red;
+    color: pink;
+    opacity: 0.7;
+    font-weight: 400;
 }

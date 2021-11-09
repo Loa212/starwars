@@ -1,4 +1,12 @@
+const getStartDate = () => {
+    let date = $('.start-date').val()
+    return date
+}
 
+const getEndDate = () => {
+    let date = $('.end-date').val()
+    return date
+}
 
 
 const fetchPlanets = async () => {
@@ -29,6 +37,16 @@ const formatDate = (inputDate) => {
     return date
 }
 
+const handleSearch = () => {
+    console.log('search!')
+
+    getStartDate()
+}
+
+const handleChange = () => {
+    console.log('Change!')
+}
+
 $(document).ready(function () {
     console.log('ready')
     fetchPlanets().then(data => {
@@ -43,5 +61,8 @@ $(document).ready(function () {
             
         }
     })
+
+    $('.search-button').click(() => handleSearch())
+    $('.change-button').click(() => handleChange())
 
 })
