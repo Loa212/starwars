@@ -37,6 +37,40 @@ const formatDate = (inputDate) => {
     return date
 }
 
+const showCards = () => {
+    console.log('showcards')
+    var cards = document.getElementsByClassName('planet-card');
+    for(i = 0; i < cards.length; i++) {
+        cards[i].style.opacity = '1';
+    }
+}
+const hideCards = () => {
+    console.log('hideCards')
+    
+    var cards = document.getElementsByClassName('planet-card');
+    for(i = 0; i < cards.length; i++) {
+        cards[i].style.opacity = '0';
+    }
+      
+}
+
+const populateCards = (planets) => {
+    //hideCards()
+
+    let p = document.querySelectorAll('.planet-card')
+
+    for (let i = 0; i < planets.length; i++) {
+        let nameDiv = p[i].querySelectorAll('.planet-name') 
+        nameDiv[0].innerHTML = planets[i].name
+
+        let dateDiv = p[i].querySelectorAll('.planet-date') 
+        dateDiv[0].innerHTML = formatDate(planets[i].created)
+        if (i == planets.length - 1) {
+            showCards()
+        }
+    }
+}
+
 const handleSearch = () => {
     console.log('search!')
 
@@ -45,21 +79,24 @@ const handleSearch = () => {
 
 const handleChange = () => {
     console.log('Change!')
+    hideCards()
+    setTimeout(() => {
+        populateCards(planets.reverse())
+    }, 500);
 }
 
+//lift "state" to use in change function
+var planets
+
 $(document).ready(function () {
-    console.log('ready')
+
     fetchPlanets().then(data => {
 
-        let planets = data.results 
+        planets = data.results 
 
         console.log(planets.length)
 
-        for (let i = 0; i < planets.length; i++) {
-            $(`#${i+1}`).find("h3").html(planets[i].name)
-            $(`#${i+1}`).find("p").html( formatDate(planets[i].created) )
-            
-        }
+        populateCards(planets.reverse())
     })
 
     $('.search-button').click(() => handleSearch())
