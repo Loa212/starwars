@@ -1,5 +1,6 @@
 const getStartDate = () => {
     let date = document.getElementsByClassName('start-date')[0].value
+    console.log('date -->', date)
     date = date.split('-')
     date = `${date[1]}-${date[2]}-${date[0]}`
     date = new Date(date)
@@ -104,21 +105,13 @@ const handleFilter = () => {
     } else if (getStartDate) {
 
         console.log('start:', getStartDate())
-        //const intersection = array1.filter(element => array2.includes(element));
-        let createdArray = planets.map(a => a.created);
+       
+        console.log('planet0: ', new Date(planets[0].created).getTime())
 
-        for (let i = 0; i < createdArray.length; i++) {
-            createdArray[i] = new Date(createdArray[i])
-            createdArray[i] = createdArray[i].toLocaleDateString()
-            createdArray[i] = new Date(createdArray[i])
-            createdArray[i] = createdArray[i].getTime()
-
-        }
-        console.log(createdArray)
-
-        let filterRes = createdArray.filter(a => a >= getStartDate())
-
-        console.log(filterRes)
+        let newPlanets = planets.filter((el) => {
+            return new Date(el.created).getTime() >= getStartDate()
+        } )
+        console.log(newPlanets)
 
     } else {
         console.log('empty inputs')
