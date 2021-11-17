@@ -1,14 +1,24 @@
 const getStartDate = () => {
     let date = document.getElementsByClassName('start-date')[0].value
-    console.log('date -->', date)
-    date = date.split('-')
-    date = `${date[1]}-${date[2]}-${date[0]}`
     date = new Date(date)
-    return date.getTime()
+    date = date.getTime()
+    date && console.log(date)
+    return date
 }
 
 const getEndDate = () => {
-    return document.getElementsByClassName('end-date')[0].valueAsNumber
+    let date = document.getElementsByClassName('end-date')[0].value
+    date = new Date(date)
+    date = date.getTime()
+    date && console.log(date)
+    return date
+
+    date = date.split('-')
+    date = `${date[1]}-${date[2]}-${date[0]}`
+    date = new Date(date)
+    date = date.getTime()
+    console.log(date)
+    return date
 }
 
 
@@ -41,29 +51,26 @@ const formatDate = (inputDate) => {
 }
 
 const showCards = () => {
-    console.log('showcards')
     var cards = document.getElementsByClassName('planet-card');
     for (i = 0; i < cards.length; i++) {
         cards[i].style.opacity = '1';
     }
 }
 const hideCards = () => {
-    console.log('hideCards')
-
     var cards = document.getElementsByClassName('planet-card');
     for (i = 0; i < cards.length; i++) {
-        //cards[i].style.display = 'none'
-        cards[i].style.opacity = '0';
-        // if(i === cards.length -1) {
-        //     for(i = 0; i < cards.length; i++) {
-        //         cards[i].style.display = 'block'
-        //     }
-        // }
+        cards[i].style.opacity = '0';     
     }
 }
 
 const populateCards = (planets) => {
-    //hideCards()
+    deleteCards()
+    let root = document.querySelectorAll(".planets-div")
+    for (let i = 0; i < planets.length; i++) {
+        root[0].innerHTML += "<div class=\"planet-card shadow\" style=\"opacity:0\"><h3 class=\"planet-name\"></h3><p class=\"planet-date\"></p> </div>"
+    }
+
+    hideCards()
 
     let p = document.querySelectorAll('.planet-card')
 
@@ -73,10 +80,12 @@ const populateCards = (planets) => {
 
         let dateDiv = p[i].querySelectorAll('.planet-date')
         dateDiv[0].innerHTML = formatDate(planets[i].created)
-        if (i == planets.length - 1) {
-            showCards()
-        }
     }
+    showCards()
+}
+
+const deleteCards = () => {
+    document.querySelectorAll('.planet-card').forEach(e => e.remove());
 }
 
 Array.prototype.intersection = function (arr) {
@@ -99,27 +108,32 @@ const handleChange = () => {
 }
 
 const handleFilter = () => {
+    let start = getStartDate()
+    let end = getEndDate()
 
-    if (getEndDate()) {
-        console.log('end date -->', getEndDate())
-    } else if (getStartDate) {
-
-        console.log('start:', getStartDate())
-       
-        console.log('planet0: ', new Date(planets[0].created).getTime())
-
+    if (start && end) {
+        console.log(planets)
         let newPlanets = planets.filter((el) => {
-            return new Date(el.created).getTime() >= getStartDate()
+            return start <= new Date(el.created.split('T')[0]).getTime() <= end
         } )
-        console.log(newPlanets)
-
+        populateCards(newPlanets)
+        planets = newPlanets
+    } else if (start) {
+        let newPlanets = planets.filter((el) => {
+            return new Date(el.created.split('T')[0]).getTime() >= start
+        } )
+        populateCards(newPlanets)
+        planets = newPlanets
+    } else if(end){
+        let newPlanets = planets.filter((el) => {
+            return new Date(el.created.split('T')[0]).getTime() <= end
+        } )
+        populateCards(newPlanets)
+        planets = newPlanets
     } else {
-        console.log('empty inputs')
+        alert('pick a start and/or an end date')
     }
 
-
-    // console.log('start date -->',getStartDate())
-    // console.log('end date -->',getEndDate())
 }
 
 
@@ -130,11 +144,7 @@ var planets
 $(document).ready(function () {
 
     fetchPlanets().then(data => {
-
         planets = data.results
-
-        console.log(planets.length)
-
         populateCards(planets.reverse())
     })
 
