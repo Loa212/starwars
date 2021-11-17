@@ -19,6 +19,12 @@ body{
     padding-top: 24px;
 }
 
+@media (max-width: 1024px){
+    .content{
+        padding: 16px 16px;
+    }
+}
+
 .dark-mode{
     /* add to the html element to obtain a very simple and minimal darkmode */
     filter: invert(1) hue-rotate(180deg);
@@ -124,6 +130,30 @@ input:hover{
     display: flex;
 }
 
+@media (max-width: 1024px){
+    input{
+        margin: 16px 0px;
+    }
+    button{
+        margin: 16px 0px;
+    }
+}
+
+@media (min-width: 1024px){
+    input{
+        margin: 0px 24px;
+    }
+    button{
+        margin: 0px 24px;
+    }
+}
+
+@media (min-width: 1024px){
+    .input-div{
+        display: flex;
+    }
+}
+
 .align-self-flex-end{
     align-self: flex-end;
 }
@@ -137,10 +167,17 @@ input:hover{
     background: #000;
     height: 100%;
     position: absolute;
-    align-self: center;
-    left: 50%;
     top: 200px;
+    left: 2%;
+    left: 50%;
+    align-self: center;
 }
+@media (max-width: 1024px){
+    .vertical-line{
+        display: none;
+    }
+}
+
 
 
 .planets-div {
@@ -154,28 +191,52 @@ input:hover{
 .planet-card{
     background: #1a1a1a;
     height: 80px;
-    max-width: 40%;
     border-radius: 6px;
     /**/
     padding: 16px 36px;
+    margin: 24px 16px;
     /**/
-    text-align: end;
+    text-align: start;
     opacity: 0;
     transition: opacity 1s ease-out;
 }
 
-.planets-div :nth-child(odd) {
-    align-self: flex-end;
-    width: 60%;
-    text-align: start;
+@media (min-width: 1024px){
+    .planets-div {
+        padding-top: 56px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
     
-}  
+    .planet-card{
+        background: #1a1a1a;
+        height: 80px;
+        max-width: 40%;
+        border-radius: 6px;
+        /**/
+        padding: 16px 36px;
+        margin: 0px;
+        /**/
+        text-align: end;
+        opacity: 0;
+        transition: opacity 1s ease-out;
+    }
 
-
-.planets-div :nth-child(even) >h3 {
-    width: 100%;
-    text-align: end;
-}  
+    .planets-div :nth-child(odd) {
+        align-self: flex-end;
+        width: 60%;
+        text-align: start;
+        
+    }  
+    
+    
+    .planets-div :nth-child(even) >h3 {
+        width: 100%;
+        text-align: end;
+    }  
+    
+}
 
 .planet-card > h3 {
     color: #fbfbfb;
